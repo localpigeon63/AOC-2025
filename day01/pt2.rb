@@ -19,13 +19,12 @@ input.each do |line|
     remainder = distance % 100
     case direction
     when "L"
-        if position > 0 &&
-            (position - remainder) <= 0
+        if remainder >= position + 1
             hits_zero += 1
         end
         position = (position - remainder) % 100
     when "R"
-        if  (position + remainder) > 99
+        if  (position + remainder) >= 100
             hits_zero += 1
         end
         position = (position + remainder) % 100
