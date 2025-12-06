@@ -1,5 +1,23 @@
-#check number of rows in input - this gives length of problem
-# initialise matching number of arrays and store in a master array
-# turn each row of input into an array of characters
-# iterate through and for each character, by index, push into corresponding array in master array
-# for each array, check if contains * or +, then delete final element and multiply or add all other elements together
+input = File.readlines("./inputs/day06.txt")
+
+matrix = input.map do |line|
+            line.chomp.strip.split(/ +/)
+end
+
+matrix = matrix.transpose
+
+total = 0
+
+matrix.each do |problem|
+    numbers = problem[0..-2].map do |number|
+            number.to_i
+    end
+    case problem[-1]
+    when "+"
+        total += numbers.sum
+    when "*"
+        total += numbers.reduce(:*)
+    end
+end
+
+puts total
