@@ -1,4 +1,4 @@
-input = File.readlines("./day05/test.txt")
+input = File.readlines("./inputs/day05.txt")
 
 ranges = []
 fresh_ingredient_codes = []
@@ -22,16 +22,21 @@ def merge_ranges(range1, range2)
     end
 end
 
-sorted_ranges.each_with_index do |current_range, index|
+index = 0
+while index < sorted_ranges.length
+  current_range = sorted_ranges[index]
     next_range = sorted_ranges[index + 1]
     if next_range == nil
+        merged_ranges << current_range
         break
     end
     if merge_ranges(current_range, next_range)
-        next_range = merge_ranges(current_range, next_range)
-        sorted_ranges.delete_at(index)
+        merged = merge_ranges(current_range, next_range)
+        sorted_ranges[index] = merged
+        sorted_ranges.delete_at(index + 1)
     else
         merged_ranges << current_range
+        index += 1
     end
 end
 
@@ -43,6 +48,4 @@ merged_ranges.each do |merged_range|
     total += (merged_range[1] - merged_range[0]) + 1
 end
 
-pp merged_ranges
-pp valid_numbers
 puts total
